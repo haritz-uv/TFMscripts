@@ -34,7 +34,6 @@ conversion_px_to_um= 5/429.225  #conversion factor from pixels to micrometers (u
 
 ax_limits = [0, 1944 * conversion_px_to_um, 0, 1957 * conversion_px_to_um]  # [xmin, xmax, ymin, ymax]
 
-
 for i in range(xsize):
     for j in range(ysize):
         y_data=y_matrix[i,j,:]
@@ -50,37 +49,47 @@ limit_up = np.nanpercentile(intensity_map, 100)
 limit_down = np.nanpercentile(intensity_map, 30)
 
 
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18,5), layout='constrained')
+fig, axs = plt.subplots(2, 2, figsize=(15,13))
+
+ax_afm= axs[0, 0]
+ax_intensity= axs[0, 1]
+ax_r2= axs[1, 0]
+ax_empty= axs[1, 1] 
 
 # --- Mapa 2: Posición del Pico (Desplazamiento / Strain) ---
 image=plt.imread(r"G:\Mi unidad\Experiments\Materials\Multiferroic\hm_zarcillo\08_measurements\20260721\zone01_id11_position_fromAFM.png")
-ax1.imshow(image, extent=ax_limits)
-ax1.set_title("AFM image")
-ax1.set_xlabel("scanner position x (um)")
-ax1.set_ylabel("scanner position y (um)")
+ax_afm.imshow(image, extent=ax_limits)
+ax_afm.set_title("AFM image", pad=5)
+#ax_afm.set_xlabel("scanner position x (um)")
+ax_afm.set_ylabel("scanner position y (um)")
+##ax_afm.secondary_xaxis('top', functions=(lambda x: x*(xsize/ax_limits[1]), lambda x:x*(ax_limits[1]/xsize))).set_xlabel("scanner position x (u.a.)")
+##ax_afm.secondary_yaxis('right', functions=(lambda y: y*(ysize/ax_limits[3]), lambda y: y*(ax_limits[3]/ysize))).set_ylabel("scanner position y (u.a.)")
 
-im2 = ax2.imshow(intensity_map, cmap='RdBu_r', interpolation='bicubic',origin='lower', vmax=limit_up, vmin=limit_down, extent=ax_limits)
-ax2.set_title("Intensity map")
-ax2.set_xlabel("scanner position x (um)")
-ax2.tick_params(labelleft=False)
-#ax2.set_ylabel("scanner position y (um)")
-fig.colorbar(im2, ax=ax2, label="Counts")
 
-im3 = ax3.imshow(r2_map, cmap='RdYlGn', origin='lower', vmin=0.85, vmax=1.0, extent=ax_limits)
-ax3.set_title("Fit Quality (R²)")
-ax3.set_xlabel("scanner position x (um)")
-#ax3.set_ylabel("scanner position y (um)")
-ax3.tick_params(labelleft=False)  
-fig.colorbar(im3, ax=ax3, label="R² score")
+im2 = ax_intensity.imshow(intensity_map, cmap='RdBu_r', interpolation='bicubic',origin='lower', vmax=limit_up, vmin=limit_down, extent=ax_limits)
+ax_intensity.set_title("Intensity map", pad=5)
+ax_intensity.set_xlabel("scanner position x (um)")
+#ax_intensity.set_ylabel("scanner position y (um)")
+ax_intensity.tick_params(labelleft=False)
+#ax_intensity.secondary_xaxis('top', functions=(lambda x: x*(xsize/ax_limits[1]), lambda x:x*(ax_limits[1]/xsize))).set_xlabel("scanner position x (u.a.)")
+#ax_intensity.secondary_yaxis('right', functions=(lambda y: y*(ysize/ax_limits[3]), lambda y: y*(ax_limits[3]/ysize))).set_ylabel("scanner position y (u.a.)")
+fig.colorbar(im2, ax=ax_intensity, orientation='vertical').ax.set_title("Counts", pad=5, fontsize=10)
 
-#for i in range(xsize):
-#    for j in range(ysize):
-#        # Escribe el número con 3 decimales
-#        if r2_map[i, j] > 0.85:
-#            ax3.text(j, i, f"{r2_map[i, j]:.3f}", 
-#                    ha="center", va="center", 
-#                    color="black" if r2_map[i, j] > 0.92 else "white", 
-#                    fontsize=5, fontweight='bold')
+im3 = ax_r2.imshow(r2_map, cmap='RdYlGn', origin='lower', vmin=0.85, vmax=1.0, extent=ax_limits)
+ax_r2.set_title("Fit Quality (R²)", pad=5)
+ax_r2.set_xlabel("scanner position x (um)")
+#ax_r2.secondary_xaxis('top', functions=(lambda x: x*(xsize/ax_limits[1]), lambda x:x*(ax_limits[1]/xsize)))
+#ax_r2.secondary_yaxis('right', functions=(lambda y: y*(ysize/ax_limits[3]), lambda y: y*(ax_limits[3]/ysize))).set_ylabel("scanner position y (u.a.)")
+ax_r2.set_ylabel("scanner position y (um)")
+fig.colorbar(im3, ax=ax_r2, orientation='vertical').ax.set_title("R² score", pad=5, fontsize=10)
 
+fig.colorbar(im3, ax=ax_afm).ax.set_visible(False)  # Hide the colorbar for the AFM image
+
+image2=plt.imread(r"G:\Mi unidad\Experiments\Materials\Multiferroic\hm_zarcillo\images\50x_with_borders&letters.png")
+ax_empty.imshow(image2, extent=ax_limits)
+ax_empty.axis('off')  # Hide the empty subplot
+ax_empty.set_title("Device overview", pad=5)
+fig.colorbar(im3, ax=ax_empty).ax.set_visible(False)  # Hide the colorbar for the empty subplot
+plt.tight_layout()
 plt.show()
 

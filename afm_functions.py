@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RectangleSelector
 from scipy.ndimage import rotate
+"Functions used in the image treatment."
 
 def square_corners_coordinates(eclick, erelease):
+    """Calculate the coordinates of the corners of a square region selected by the user."""
+
     x_start, y_start = int(eclick.xdata), int(eclick.ydata)
     x_end, y_end = int(erelease.xdata), int(erelease.ydata)
 
@@ -13,6 +16,7 @@ def square_corners_coordinates(eclick, erelease):
     return x_start, y_start, x_end, y_end
 
 def quick_plot_img(img_path):
+    """plot an image and allow the user to select a square region. Shows the coordinates of the selected region in the console."""
     img = plt.imread(img_path)
     fig, ax = plt.subplots(figsize = (8, 8))
     ax.imshow(img, cmap='gray', origin='lower')
