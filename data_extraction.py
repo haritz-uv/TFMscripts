@@ -2,6 +2,16 @@
 """
 Created on Tue May  5 09:43:35 2026
 
+This script plots a 2x2 mapping of the PL spectra. 
+1st: Data extraction
+2nd: Iterates through each point in the mapping and does the fitting using scipy curve-fit on a pseudo-Voigt function defined in
+the file peak_track_functions.py
+3rd: plots
+ - An image, in this case an OM image of the device
+ - An AFM image
+ - The intensity mapping with the colorbar showing intensity maxima
+ - The fit mapping where each point is the R2 value of the fitting
+
 @author: hment
 """
 
