@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Feb  5 11:32:41 2026
-
+This file paints scalebars in optical microscope images, the inputs are the name of the microscope used (had 2 at the lab: "sahara" and "madagascar"; the magnification
+used; the number of microns on the scalebar; and the image path
 @author: hment
 """
 import sys
