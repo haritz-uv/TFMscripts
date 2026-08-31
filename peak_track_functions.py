@@ -3,9 +3,11 @@ from scipy.optimize import curve_fit
 from scipy.signal import medfilt
 
 def gaussian(x, amp, x0, sigma):
+    #Gaussian function
     return  amp*np.exp(-(x - x0)**2/(2 * sigma**2))
 
 def lorentzian(x, amp, x0, gamma):
+    #Lorentzian function
     return amp*gamma**2/((x-x0)**2+gamma**2) 
 
 def pv(x,A,eta,x0,w, offset):
