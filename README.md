@@ -1,5 +1,5 @@
 # TFM
 "Modulating WSe2 Photoluminescence through vdW ferroelectric coupling"
-Nanoscience and molecular nanotechnology master's degree thesis by Haritz Mentaste on ICMol 2D Cristalline Inorganic Solids group tuthorized by Efren Navarro Moratalla and José Joaquín Pérez Grau.
+Nanoscience and molecular nanotechnology master's degree thesis by Haritz Mentaste on ICMol 2D Cristalline Inorganic Solids group tuthorized by Efren Navarro Moratalla and José Joaquín Pérez Grau. You can access the finished thesis in main/docs/TFM_Haritz_Mentaste.pdf
 
 On this repository I'm uploading the scripts I used for the data analysis. This is my first project uploaded in Github, suggestions & comments are very much appreciated.
